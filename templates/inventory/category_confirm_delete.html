@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Delete Category{% endblock %}
+
+{% block content %}
+<div class="col-md-5 mx-auto">
+  <div class="alert alert-warning shadow-sm">
+    <h4>Delete “{{ object.name }}”?</h4>
+    <p class="mb-3">All related products will keep their category as “None”.</p>
+    <form method="post">{% csrf_token %}
+      <a href="{% url 'category_list' %}" class="btn btn-secondary">Cancel</a>
+      <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

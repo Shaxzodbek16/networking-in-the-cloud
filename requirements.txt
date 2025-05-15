@@ -1,0 +1,15 @@
+asgiref==3.8.1
+black==25.1.0
+click==8.2.0
+crispy-bootstrap5==2025.4
+Django==5.2.1
+django-crispy-forms==2.4
+django-jazzmin==3.0.1
+Faker==37.3.0
+mypy_extensions==1.1.0
+packaging==25.0
+pathspec==0.12.1
+platformdirs==4.3.8
+python-dotenv==1.1.0
+sqlparse==0.5.3
+tzdata==2025.2

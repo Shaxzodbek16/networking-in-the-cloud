@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="180" height="40" viewBox="0 0 180 40"
+     xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="erpTitle">
+  <title id="erpTitle">ERP System</title>
+  <g id="glyph" fill="#0ea5e9">
+    <rect x="0"  y="0" width="40" height="8"  rx="2"/>
+    <rect x="0"  y="16" width="40" height="8" rx="2"/>
+    <rect x="0"  y="32" width="40" height="8" rx="2"/>
+  </g>
+  <text x="50" y="28"
+        font-family="Montserrat, Roboto, sans-serif"
+        font-weight="700"
+        font-size="28"
+        letter-spacing="1"
+        fill="#1f2937">
+    ERP<span fill="#3b82f6">•</span>System
+  </text>
+</svg>

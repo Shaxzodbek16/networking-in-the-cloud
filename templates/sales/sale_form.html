@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}New Sale{% endblock %}
+{% block content %}
+<div class="col-md-8 mx-auto">
+  <h3 class="mb-3">New Sale</h3>
+  <form method="post" class="card p-4 shadow-sm">{% csrf_token %}
+      {{ form|crispy }}
+      <hr>
+      <h5>Items</h5>
+      {{ items.management_form }}
+      {% for form in items %}
+          <div class="border rounded p-3 mb-2">
+              {{ form|crispy }}
+          </div>
+      {% endfor %}
+      <button class="btn btn-primary mt-2 w-100">Save</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% block title %}Products{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between mb-3">
+  <h2>Products</h2>
+  <a href="{% url 'product_create' %}" class="btn btn-success">+ New Product</a>
+</div>
+
+<table class="table table-hover shadow-sm">
+  <thead class="table-primary">
+    <tr>
+      <th>#</th><th>Name</th><th>Category</th><th>Qty</th>
+      <th>Sell Price</th><th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for p in object_list %}
+    <tr class="{% if p.is_low %}table-danger{% endif %}">
+      <td>{{ forloop.counter0|add:page_obj.start_index }}</td>
+      <td>{{ p.name }}</td>
+      <td>{{ p.category }}</td>
+      <td>{{ p.quantity }}</td>
+      <td>{{ p.sell_price|floatformat:2 }}</td>
+      <td>
+        <a href="{% url 'product_update' p.id %}" class="btn btn-sm btn-outline-primary">Edit</a>
+        <a href="{% url 'product_delete' p.id %}" class="btn btn-sm btn-outline-danger">Del</a>
+      </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="6" class="text-center">No products yet</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% include "partials/pagination.html" with page_obj=page_obj %}
+{% endblock %}

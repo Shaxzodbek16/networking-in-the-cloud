@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}{% if object %}Edit{% else %}Create{% endif %} User{% endblock %}
+{% block content %}
+<div class="col-md-6 mx-auto">
+  <h3 class="mb-3">{% if object %}Edit{% else %}Create{% endif %} User</h3>
+  <form method="post" class="card p-4 shadow-sm">
+      {% csrf_token %}
+      {{ form }}
+      <button type="submit" class="btn btn-primary mt-2 w-100">Save</button>
+  </form>
+</div>
+{% endblock %}

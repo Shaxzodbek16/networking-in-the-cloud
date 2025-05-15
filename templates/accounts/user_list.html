@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Users{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between mb-3">
+  <h2>Users</h2>
+  <a href="{% url 'user_create' %}" class="btn btn-success">+ New User</a>
+</div>
+
+<table class="table table-striped shadow-sm">
+  <thead class="table-primary">
+    <tr><th>#</th><th>Username</th><th>Role</th><th>Active</th><th>Actions</th></tr>
+  </thead>
+  <tbody>
+    {% for u in users %}
+    <tr>
+      <td>{{ forloop.counter0|add:page_obj.start_index }}</td>
+      <td>{{ u.username }}</td>
+      <td>{{ u.get_role_display }}</td>
+      <td>{{ u.is_active|yesno:"✅,❌" }}</td>
+      <td>
+        <a href="{% url 'user_update' u.id %}" class="btn btn-sm btn-outline-primary">Edit</a>
+        <a href="{% url 'user_delete' u.id %}" class="btn btn-sm btn-outline-danger">Del</a>
+      </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="5" class="text-center">No users</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% include "partials/pagination.html" with page_obj=page_obj %}
+{% endblock %}

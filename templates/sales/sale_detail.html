@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Sale #{{ object.id }}{% endblock %}
+{% block content %}
+<h3>Sale #{{ object.id }}</h3>
+<p><strong>Date:</strong> {{ object.datetime|date:"Y-m-d H:i" }}</p>
+<p><strong>Cashier:</strong> {{ object.cashier.username }}</p>
+
+<table class="table table-sm border">
+  <thead><tr><th>Product</th><th>Qty</th><th>Price</th><th>Line total</th></tr></thead>
+  <tbody>
+    {% for it in object.items.all %}
+    <tr>
+      <td>{{ it.product.name }}</td>
+      <td>{{ it.quantity }}</td>
+      <td>{{ it.price|floatformat:2 }}</td>
+      <td>{{ it.line_total|floatformat:2 }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h4 class="text-end">Total: {{ object.total|floatformat:2 }}</h4>
+<a href="{% url 'sale_list' %}" class="btn btn-secondary">Back</a>
+{% endblock %}

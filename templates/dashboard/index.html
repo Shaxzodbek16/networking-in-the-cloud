@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% include "partials/_navbar.html" %}
+
+{% block content %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'dashboard/index.css' %}">
+{% endblock %}
+<div class="container">
+    <h1>Dashboard</h1>
+
+    <!-- Key Metrics -->
+    <div class="dashboard-metrics">
+        <div class="metric-card">
+            <div class="metric-info">
+                <div class="metric-title">Total Sales</div>
+                <div class="metric-value">{{ total_sales_count }}</div>
+            </div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-info">
+                <div class="metric-title">Total Revenue</div>
+                <div class="metric-value">${{ total_revenue|floatformat:2 }}</div>
+            </div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-info">
+                <div class="metric-title">Total Products</div>
+                <div class="metric-value">{{ total_products }}</div>
+            </div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-info">
+                <div class="metric-title">Active Users</div>
+                <div class="metric-value">{{ active_users }}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+        <ul class="tab-list">
+            <li class="tab active" data-tab="overview">Overview</li>
+            <li class="tab" data-tab="inventory">Inventory</li>
+            <li class="tab" data-tab="sales">Sales</li>
+            <li class="tab" data-tab="users">Users</li>
+        </ul>
+    </div>
+
+    <!-- Overview Tab -->
+    <div id="overview" class="tab-content active">
+        <div class="chart-grid">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Sales Over Time</h2>
+                    <p class="card-description">Last 30 days</p>
+                </div>
+                <div class="card-content"><canvas id="salesChart"></canvas></div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Inventory by Category</h2>
+                    <p class="card-description">Product distribution</p>
+                </div>
+                <div class="card-content"><canvas id="inventoryChart"></canvas></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Inventory Tab -->
+    <div id="inventory" class="tab-content">
+        <div class="chart-grid">
+            <div class="card">
+                <div class="card-header"><h2 class="card-title">Low Stock Products</h2></div>
+                <div class="card-content">
+                    <table>
+                        <thead><tr><th>Name</th><th>Category</th><th>Stock</th><th>Min Stock</th><th>SKU</th></tr></thead>
+                        <tbody>
+                            {% for p in low_stock_products %}
+                            <tr>
+                                <td>{{ p.name }}</td>
+                                <td>{{ p.category_name }}</td>
+                                <td>{{ p.quantity }}</td>
+                                <td>{{ p.min_stock }}</td>
+                                <td>{{ p.sku }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr><td colspan="5">All products above minimum stock.</td></tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header"><h2 class="card-title">Category Revenue</h2></div>
+                <div class="card-content"><canvas id="categoryRevenueChart"></canvas></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sales Tab -->
+    <div id="sales" class="tab-content">
+        <div class="chart-grid">
+            <div class="card">
+                <div class="card-header"><h2 class="card-title">Top Selling Products</h2></div>
+                <div class="card-content"><canvas id="topProductsChart"></canvas></div>
+            </div>
+            <div class="card">
+                <div class="card-header"><h2 class="card-title">Revenue by Category</h2></div>
+                <div class="card-content"><canvas id="revenueByCategoryChart"></canvas></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Users Tab -->
+    <div id="users" class="tab-content">
+        <div class="chart-grid">
+            <div class="card">
+                <div class="card-header"><h2 class="card-title">User Distribution</h2></div>
+                <div class="card-content"><canvas id="userDistributionChart"></canvas></div>
+            </div>
+            <div class="card">
+                <div class="card-header"><h2 class="card-title">Top Performing Staff</h2></div>
+                <div class="card-content">
+                    <table>
+                        <thead><tr><th>Name</th><th>Role</th><th>Revenue</th><th>Transactions</th></tr></thead>
+                        <tbody>
+                            {% for s in top_staff %}
+                            <tr>
+                                <td>{{ s.username }}</td>
+                                <td>{{ s.role }}</td>
+                                <td>${{ s.revenue|floatformat:2 }}</td>
+                                <td>{{ s.transactions }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+function renderCharts() {
+    const salesData = {{ sales_over_time|safe }};
+    const invData = {{ inventory_by_category|safe }};
+    const catRev = {{ category_revenue|safe }};
+    const topProd = {{ top_selling_products|safe }};
+    const userDist = {{ user_distribution|safe }};
+
+    new Chart(document.getElementById('salesChart'), { type:'line', data:{ labels:salesData.map(d=>d.day), datasets:[{label:'Sales',data:salesData.map(d=>d.total_sales),tension:0.3},{label:'Revenue',data:salesData.map(d=>d.total_revenue),tension:0.3}] } });
+    new Chart(document.getElementById('inventoryChart'), { type:'pie', data:{ labels:invData.map(d=>d.name), datasets:[{data:invData.map(d=>d.product_count)}] } });
+    new Chart(document.getElementById('categoryRevenueChart'), { type:'bar', data:{ labels:catRev.map(d=>d.category), datasets:[{label:'Revenue',data:catRev.map(d=>d.revenue)}] } });
+    new Chart(document.getElementById('topProductsChart'), { type:'bar', data:{ labels:topProd.map(d=>d.name), datasets:[{label:'Qty',data:topProd.map(d=>d.total_qty)}] } });
+    new Chart(document.getElementById('revenueByCategoryChart'), { type:'bar', data:{ labels:catRev.map(d=>d.category), datasets:[{label:'Revenue',data:catRev.map(d=>d.revenue)}] } });
+    new Chart(document.getElementById('userDistributionChart'), { type:'doughnut', data:{ labels:userDist.map(d=>d.role), datasets:[{data:userDist.map(d=>d.count)}] } });
+}
+document.addEventListener('DOMContentLoaded', renderCharts);
+</script>
+{% endblock %}
+
+{% block footer %}{% include "partials/_footer.html" %}{% endblock %}

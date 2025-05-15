@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}Sales{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between mb-3">
+  <h2>Sales</h2>
+  <a href="{% url 'sale_create' %}" class="btn btn-success">+ New Sale</a>
+</div>
+
+<table class="table table-striped shadow-sm">
+  <thead class="table-primary">
+    <tr><th>#</th><th>Date</th><th>Cashier</th><th>Total</th><th></th></tr>
+  </thead>
+  <tbody>
+    {% for s in sales %}
+    <tr>
+      <td>{{ forloop.counter0|add:page_obj.start_index }}</td>
+      <td>{{ s.datetime|date:"Y-m-d H:i" }}</td>
+      <td>{{ s.cashier.username }}</td>
+      <td>{{ s.total|floatformat:2 }}</td>
+      <td><a href="{% url 'sale_detail' s.id %}" class="btn btn-sm btn-outline-primary">View</a></td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="5" class="text-center">No sales</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% include "partials/pagination.html" with page_obj=page_obj %}
+{% endblock %}

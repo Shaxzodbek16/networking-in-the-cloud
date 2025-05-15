@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.env
+.env/
+*.venv
+.venv/
+*.egg
+*.egg-info/
+dist/
+build/
+*.log
+venv/
+.env
+db.sqlite3
+
+
+# JavaScript/Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# macOS
+.DS_Store
+
+# General
+.idea/
+.vscode/
+*.swp
+```

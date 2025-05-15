@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}Delete User{% endblock %}
+{% block content %}
+<div class="col-md-6 mx-auto">
+  <div class="alert alert-warning shadow-sm">
+    <h4>Delete "{{ object.username }}"?</h4>
+    <p>This action cannot be undone.</p>
+    <form method="post">
+        {% csrf_token %}
+        <a href="{% url 'user_list' %}" class="btn btn-secondary">Cancel</a>
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
