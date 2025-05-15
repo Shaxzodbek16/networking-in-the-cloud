@@ -119,6 +119,7 @@ jobs:
           key: ${{secrets.KEY}}
           script: |
             cd /var/www/networking-in-the-cloud
+            git config pull.rebase true
             git pull origin deploy
             source venv/bin/activate
             pip install -r requirements.txt
