@@ -2,9 +2,9 @@ name: Django CD
 
 on:
   push:
-    branches: [ "*" ]
+    branches: [ "deploy" ]
   pull_request:
-    branches: [ "*" ]
+    branches: [ "deploy" ]
 
 jobs:
   test-accounts:
