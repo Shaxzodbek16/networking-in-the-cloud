@@ -6,6 +6,7 @@ Django==5.2.1
 django-crispy-forms==2.4
 django-jazzmin==3.0.1
 Faker==37.3.0
+gunicorn==23.0.0
 mypy_extensions==1.1.0
 packaging==25.0
 pathspec==0.12.1
