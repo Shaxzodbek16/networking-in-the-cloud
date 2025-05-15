@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError
 from django.urls import reverse
 from .models import Category, Product
 
+
 class CategoryModelTests(TestCase):
     def test_category_str_returns_name(self):
         category = Category.objects.create(name="Food")
@@ -57,6 +58,7 @@ class CategoryModelTests(TestCase):
         cat = Category.objects.create(name="Pastries")
         self.assertIsNotNone(cat.created_at)
         self.assertIsNotNone(cat.updated_at)
+
 
 class ProductModelTests(TestCase):
     def setUp(self):

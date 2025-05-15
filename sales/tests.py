@@ -7,6 +7,7 @@ from sales.models import Sale, SaleItem
 
 User = get_user_model()
 
+
 class SaleAndSaleItemModelTests(TestCase):
 
     def setUp(self):
@@ -37,7 +38,9 @@ class SaleAndSaleItemModelTests(TestCase):
 
     def test_sale_ordering(self):
         s1 = Sale.objects.create(cashier=self.user, datetime=timezone.now())
-        s2 = Sale.objects.create(cashier=self.user, datetime=timezone.now() + timezone.timedelta(minutes=5))
+        s2 = Sale.objects.create(
+            cashier=self.user, datetime=timezone.now() + timezone.timedelta(minutes=5)
+        )
         sales = list(Sale.objects.all())
         self.assertEqual(sales, [s2, s1])
 
@@ -64,8 +67,7 @@ class SaleAndSaleItemModelTests(TestCase):
         SaleItem.objects.create(sale=sale, product=self.product2, quantity=2)
         sale.refresh_from_db()
         expected_total = (
-            self.product1.sell_price * 3
-            + self.product2.sell_price * 2
+            self.product1.sell_price * 3 + self.product2.sell_price * 2
         ).quantize(Decimal("0.01"))
         self.assertEqual(sale.total, expected_total)
 

@@ -6,7 +6,9 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-f_6$_orf58ft=5yf3ghus0qz!fsmngl9_j+=&lq$aumxr=f7_z")
+SECRET_KEY = os.getenv(
+    "SECRET_KEY", "django-insecure-f_6$_orf58ft=5yf3ghus0qz!fsmngl9_j+=&lq$aumxr=f7_z"
+)
 DEBUG = os.getenv("DEBUG", False)
 
 ALLOWED_HOSTS = ["*"]
@@ -96,10 +98,13 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = "static/"
+
 STATICFILES_DIRS = [BASE_DIR / "static"]
-STATIC_ROOT = BASE_DIR / "staticfiles"
-MEDIA_URL = "media/"
-MEDIA_ROOT = BASE_DIR / "media"
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
+MEDIA_URL = "/media/"
+
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "accounts.User"

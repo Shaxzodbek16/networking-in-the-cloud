@@ -29,7 +29,7 @@ class Command(BaseCommand):
         # generate random weights for categories (they sum to 1)
         weights = [random.random() for _ in categories]
         total = sum(weights)
-        self.category_weights = [w/total for w in weights]
+        self.category_weights = [w / total for w in weights]
 
         products = self._create_products(fake, categories)
         # build a product popularity list (initially uniform, will drift over sales)
@@ -59,7 +59,9 @@ class Command(BaseCommand):
         Product.objects.all().delete()
         products = []
         for _ in range(self.PRODUCTS):
-            idx = random.choices(range(len(categories)), weights=self.category_weights, k=1)[0]
+            idx = random.choices(
+                range(len(categories)), weights=self.category_weights, k=1
+            )[0]
             cat = categories[idx]
 
             name = f"{fake.color_name()} {fake.word().title()} {fake.unique.random_int(1, 99999):05}+{uuid.uuid4()}"
@@ -70,9 +72,13 @@ class Command(BaseCommand):
             min_stock = random.randint(5, 50)
 
             prod = Product.objects.create(
-                category=cat, name=name, sku=sku,
-                cost_price=cost, sell_price=sell,
-                quantity=qty, min_stock=min_stock
+                category=cat,
+                name=name,
+                sku=sku,
+                cost_price=cost,
+                sell_price=sell,
+                quantity=qty,
+                min_stock=min_stock,
             )
             products.append(prod)
         return products
@@ -84,14 +90,18 @@ class Command(BaseCommand):
         for _ in range(self.SALES):
             sale = Sale.objects.create(
                 cashier=random.choice(cashiers),
-                datetime=fake.date_time_between(start_date="-60d", end_date="now", tzinfo=timezone.get_current_timezone())
+                datetime=fake.date_time_between(
+                    start_date="-60d",
+                    end_date="now",
+                    tzinfo=timezone.get_current_timezone(),
+                ),
             )
 
             # choose 1–5 line items, favoring popular products
             picks = random.choices(
                 range(len(products)),
                 weights=self.product_popularity,
-                k=random.randint(1,5)
+                k=random.randint(1, 5),
             )
             for idx in picks:
                 prod = products[idx]
