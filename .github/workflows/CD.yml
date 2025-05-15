@@ -2,9 +2,9 @@ name: Django CD
 
 on:
   push:
-    branches: [ "deploy" ]
+    branches: [ "*" ]
   pull_request:
-    branches: [ "deploy" ]
+    branches: [ "*" ]
 
 jobs:
   test-accounts:
@@ -116,6 +116,6 @@ jobs:
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
-          key: ${{secrects.KEY}}
+          key: ${{secrets.KEY}}
           script: |
             whoami
