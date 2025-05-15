@@ -64,7 +64,7 @@ class Command(BaseCommand):
             )[0]
             cat = categories[idx]
 
-            name = f"{fake.color_name()} {fake.word().title()} {fake.unique.random_int(1, 99999):05}+{uuid.uuid4()}"
+            name = f"{fake.color_name()} {fake.word().title()} {fake.unique.random_int(1, 99999):05}"
             sku = fake.unique.bothify(text="??#####").upper()
             cost = Decimal(fake.pydecimal(left_digits=2, right_digits=2, positive=True))
             sell = (cost * Decimal(random.uniform(1.2, 2.5))).quantize(Decimal("0.01"))
