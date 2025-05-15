@@ -13,10 +13,10 @@ from sales.models import Sale, SaleItem
 class Command(BaseCommand):
     help = "Populate demo DB: 1000 users, 10 categories, 100k products, 50k sales"
 
-    USERS = 234
+    USERS = 28
     CATEGORIES = 5
-    PRODUCTS = 23894
-    SALES = 12324
+    PRODUCTS = 923
+    SALES = 121
 
     def handle(self, *args, **kwargs):
         fake = Faker("en_US")
