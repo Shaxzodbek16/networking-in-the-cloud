@@ -41,12 +41,24 @@
     <!-- Tabs -->
     <div class="tabs">
         <ul class="tab-list">
-            <li class="tab active" data-tab="overview">Overview</li>
-            <li class="tab" data-tab="inventory">Inventory</li>
-            <li class="tab" data-tab="sales">Sales</li>
-            <li class="tab" data-tab="users">Users</li>
+            <li class="tab active" data-tab="overview" onclick="switchTab(this, 'overview')">Overview</li>
+            <li class="tab" data-tab="inventory" onclick="switchTab(this, 'inventory')">Inventory</li>
+            <li class="tab" data-tab="sales" onclick="switchTab(this, 'sales')">Sales</li>
+            <li class="tab" data-tab="users" onclick="switchTab(this, 'users')">Users</li>
         </ul>
     </div>
+
+    <script>
+        function switchTab(tab, tabName) {
+            // Remove active class from all tabs and content
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+            // Add active class to clicked tab and corresponding content
+            tab.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+        }
+    </script>
 
     <!-- Overview Tab -->
     <div id="overview" class="tab-content active">
@@ -56,7 +68,7 @@
                     <h2 class="card-title">Sales Over Time</h2>
                     <p class="card-description">Last 30 days</p>
                 </div>
-                <div class="card-content"><canvas id="salesChart"></canvas></div>
+                <div class="card-content" style=""><canvas id="salesChart"></canvas></div>
             </div>
             <div class="card">
                 <div class="card-header">

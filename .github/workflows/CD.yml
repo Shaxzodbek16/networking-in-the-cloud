@@ -118,4 +118,12 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{secrets.KEY}}
           script: |
-            whoami
+            cd /var/www/networking-in-the-cloud
+            git pull origin deploy
+            source venv/bin/activate
+            pip install -r requirements.txt
+            python manage.py migrate
+            python manage.py collectstatic --noinput
+            sudo systemctl daemon-reload
+            sudo systemctl restart gunicorn
+            sudo nginx -t && sudo systemctl restart nginx
