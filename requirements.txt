@@ -14,3 +14,4 @@ platformdirs==4.3.8
 python-dotenv==1.1.0
 sqlparse==0.5.3
 tzdata==2025.2
+whitenoise==6.9.0
