@@ -34,6 +34,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -93,10 +94,18 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = "en-us"
 
 TIME_ZONE = "UTC"
-
 USE_I18N = True
-
+USE_L10N = True
 USE_TZ = True
+
+LANGUAGES = [
+    ('en','English'),
+    ('ru','Russian'),
+    ('uz','Uzbek'),
+]
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',
+]
 
 STATIC_URL = "static/"
 
