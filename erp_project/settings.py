@@ -99,12 +99,12 @@ USE_L10N = True
 USE_TZ = True
 
 LANGUAGES = [
-    ('en','English'),
-    ('ru','Russian'),
-    ('uz','Uzbek'),
+    ("en", "English"),
+    ("ru", "Russian"),
+    ("uz", "Uzbek"),
 ]
 LOCALE_PATHS = [
-    BASE_DIR / 'locale',
+    BASE_DIR / "locale",
 ]
 
 STATIC_URL = "static/"
@@ -116,8 +116,7 @@ MEDIA_URL = "/media/"
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "accounts.User"
